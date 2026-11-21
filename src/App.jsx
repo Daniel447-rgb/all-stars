@@ -28,7 +28,7 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#07090e] text-slate-100 flex flex-col font-sans selection:bg-[#cba358] selection:text-[#07090e]">
+    <div className="min-h-screen w-full max-w-[100vw] bg-[#07090e] text-slate-100 flex flex-col font-sans selection:bg-[#cba358] selection:text-[#07090e] overflow-x-clip">
       
       {/* Navigation */}
       <Navbar

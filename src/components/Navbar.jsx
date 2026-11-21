@@ -51,12 +51,12 @@ export default function Navbar({ onOpenAdmin, onOpenAuth }) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-[#07090e]/90 backdrop-blur-xl border-b border-[#1a202c] transition-all duration-300 w-full">
+    <header className="relative lg:sticky top-0 z-40 bg-[#07090e]/90 backdrop-blur-xl border-b border-[#1a202c] transition-all duration-300 w-full max-w-[100vw] overflow-x-clip">
       <div className="w-full px-4 sm:px-8 lg:px-12 2xl:px-16">
         <div className="flex items-center justify-between h-16 sm:h-20">
           
           {/* Logo & Academy Name */}
-          <a href="#home" className="flex items-center gap-3.5 group">
+          <a href="#home" className="flex items-center gap-2 sm:gap-3.5 group shrink-0 min-w-0">
             <div className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-[#f3df9b] via-[#cba358] to-[#8e6d2b] p-0.5 shadow-xl shadow-[#cba358]/10 group-hover:shadow-[#cba358]/25 transition-all duration-300">
               <div className="w-full h-full bg-[#07090e] rounded-[10px] flex items-center justify-center">
                 <Shield className="w-5 h-5 text-[#cba358] group-hover:scale-110 transition-transform duration-200" />
@@ -158,7 +158,7 @@ export default function Navbar({ onOpenAdmin, onOpenAuth }) {
           </div>
 
           {/* Mobile menu trigger */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden shrink-0 ml-2">
             <button
               onClick={toggleFullScreen}
               className="p-2 rounded-xl text-slate-400 hover:text-white bg-[#0e121a] border border-[#1e2536]"
@@ -189,7 +189,7 @@ export default function Navbar({ onOpenAdmin, onOpenAuth }) {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#07090e] border-b border-[#1a202c] px-4 pt-3 pb-6 space-y-2 animate-slide-in">
+        <div className="absolute left-0 right-0 top-full lg:hidden w-full max-w-[100vw] bg-[#07090e] border-b border-[#1a202c] px-4 pt-3 pb-6 space-y-2 animate-slide-in shadow-2xl overflow-x-hidden">
           {navLinks.map((link) => (
             <a
               key={link.name}
