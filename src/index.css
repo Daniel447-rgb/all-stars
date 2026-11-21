@@ -158,3 +158,118 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #cba358;
 }
+
+/* Mobile and compact-device layout safeguards */
+@media (max-width: 640px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  header > div:first-child,
+  section > div.relative.z-10,
+  section > div[class*="px-"] {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  header > div:first-child > div {
+    height: 64px !important;
+  }
+
+  section[id] {
+    scroll-margin-top: 64px;
+  }
+
+  section.py-24 {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  #home {
+    min-height: auto !important;
+  }
+
+  #home h1 {
+    font-size: clamp(2rem, 10vw, 2.75rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  #home [class*="rounded-3xl"][class*="p-6"] {
+    padding: 16px !important;
+  }
+
+  #home [class*="grid-cols-3"] {
+    gap: 6px !important;
+  }
+
+  #home [class*="grid-cols-3"] [class*="p-3"] {
+    padding: 8px !important;
+  }
+
+  #home [class*="grid-cols-3"] [class*="text-xs"] {
+    font-size: 10px !important;
+  }
+
+  #home [class*="w-32"] {
+    width: 72px !important;
+  }
+
+  .animate-marquee {
+    animation-duration: 24s;
+  }
+
+  [class*="text-3xl"]:where(h2) {
+    font-size: 1.75rem !important;
+  }
+
+  [class*="text-2xl"]:where(h3) {
+    font-size: 1.15rem !important;
+  }
+
+  [class*="p-7"]:where(.group),
+  [class*="p-9"] {
+    padding: 16px !important;
+  }
+
+  .fixed.inset-0 [class*="max-h-[90vh]"] {
+    max-height: calc(100dvh - 24px) !important;
+  }
+
+  .fixed.inset-0 [class*="rounded-3xl"] {
+    border-radius: 18px !important;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  header [class*="gap-3.5"] {
+    gap: 6px !important;
+  }
+
+  header [class*="w-11"] {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  header [class*="text-xl"] {
+    font-size: 14px !important;
+  }
+
+  header [class*="tracking-[0.25em]"] {
+    display: none;
+  }
+
+  #home [class*="grid-cols-3"] [class*="flex"] span {
+    gap: 2px;
+  }
+
+  #home [class*="grid-cols-3"] [class*="flex"] svg {
+    display: none;
+  }
+}

@@ -53,7 +53,7 @@ export default function Navbar({ onOpenAdmin, onOpenAuth }) {
   return (
     <header className="sticky top-0 z-40 bg-[#07090e]/90 backdrop-blur-xl border-b border-[#1a202c] transition-all duration-300 w-full">
       <div className="w-full px-4 sm:px-8 lg:px-12 2xl:px-16">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           
           {/* Logo & Academy Name */}
           <a href="#home" className="flex items-center gap-3.5 group">
@@ -67,10 +67,10 @@ export default function Navbar({ onOpenAdmin, onOpenAuth }) {
             </div>
 
             <div className="flex flex-col text-left">
-              <span className="font-extrabold text-xl tracking-wider uppercase text-white group-hover:text-[#f3df9b] transition-colors flex items-center gap-2">
-                ALL Stars <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f3df9b] to-[#cba358]">Academy</span>
+              <span className="font-extrabold text-sm sm:text-xl tracking-wide sm:tracking-wider uppercase text-white group-hover:text-[#f3df9b] transition-colors flex items-center gap-1 sm:gap-2">
+                ALL Stars <span className="hidden sm:inline text-transparent bg-clip-text bg-gradient-to-r from-[#f3df9b] to-[#cba358]">Academy</span>
               </span>
-              <span className="text-[9px] tracking-[0.25em] text-slate-400 uppercase font-semibold">
+              <span className="hidden sm:block text-[9px] tracking-[0.25em] text-slate-400 uppercase font-semibold">
                 Elite Football Development
               </span>
             </div>
