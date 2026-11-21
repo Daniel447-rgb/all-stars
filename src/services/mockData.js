@@ -66,7 +66,7 @@ export const INITIAL_SETTINGS = {
   academyName: 'ALL Stars Academy',
   tagline: 'Forging The Next Generation of Football Royalty',
   coachName: 'Coach Adekunle',
-  coachWhatsapp: '+2348123456789', // Editable in admin
+  coachWhatsapp: '+2347037143782', // Editable in admin
   coachEmail: 'coach@allstarsacademy.com',
   trainingGround: 'ALL Stars Sports Complex, Starway Arena',
   trainingDays: 'Tuesdays, Thursdays & Saturday Mornings',

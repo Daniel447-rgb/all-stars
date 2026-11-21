@@ -70,6 +70,9 @@ export const AppProvider = ({ children }) => {
         if (merged.heroSlideIntervalSec === 30 || !merged.heroSlideIntervalSec) {
           merged.heroSlideIntervalSec = 15;
         }
+        if (!merged.coachWhatsapp || merged.coachWhatsapp === '+2348123456789') {
+          merged.coachWhatsapp = '+2347037143782';
+        }
         return merged;
       } catch {
         // ignore

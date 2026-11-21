@@ -104,7 +104,7 @@ export default function AdminPanel({ isOpen, onClose }) {
   // Club Settings Form
   const [settingsForm, setSettingsForm] = useState({
     coachName: clubSettings.coachName || 'Coach Adekunle',
-    coachWhatsapp: clubSettings.coachWhatsapp || '+2348123456789',
+    coachWhatsapp: clubSettings.coachWhatsapp || '+2347037143782',
     trainingGround: clubSettings.trainingGround || 'ALL Stars Sports Complex',
     trainingDays: clubSettings.trainingDays || 'Tuesdays & Saturdays',
     heroSlideIntervalSec: clubSettings.heroSlideIntervalSec || 15,
@@ -770,7 +770,7 @@ export default function AdminPanel({ isOpen, onClose }) {
                         required
                         value={settingsForm.coachWhatsapp}
                         onChange={(e) => setSettingsForm(prev => ({ ...prev, coachWhatsapp: e.target.value }))}
-                        placeholder="+2348123456789"
+                        placeholder="+2347037143782"
                         className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-emerald-400"
                       />
                       <span className="text-[10px] text-slate-500 mt-1 block">Include country code with plus sign, e.g. +234...</span>

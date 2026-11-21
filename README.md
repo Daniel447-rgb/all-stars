@@ -83,6 +83,6 @@ To upload player portraits directly to the cloud without needing a credit card:
 The Head Coach's WhatsApp number can be customized anytime:
 1. Open the **Admin Panel**.
 2. Go to **Club & ImgBB Settings**.
-3. Under **Coach WhatsApp Phone Number**, enter your phone number with your country code (e.g. `+2348123456789`).
+3. Under **Coach WhatsApp Phone Number**, enter your phone number with your country code (e.g. `+2347037143782`).
 4. Click **Save All Settings**.
 All visitor trial applications will immediately direct to that number!

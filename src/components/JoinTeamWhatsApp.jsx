@@ -47,14 +47,14 @@ export default function JoinTeamWhatsApp() {
 
   const handleSendWhatsApp = (e) => {
     e.preventDefault();
-    const cleanPhone = (clubSettings.coachWhatsapp || '+2348123456789').replace(/[^0-9]/g, '');
+    const cleanPhone = (clubSettings.coachWhatsapp || '+2347037143782').replace(/[^0-9]/g, '');
     const message = generateWhatsAppMessage();
     const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
   const handleQuickChat = () => {
-    const cleanPhone = (clubSettings.coachWhatsapp || '+2348123456789').replace(/[^0-9]/g, '');
+    const cleanPhone = (clubSettings.coachWhatsapp || '+2347037143782').replace(/[^0-9]/g, '');
     const quickMsg = `Hello ${clubSettings.coachName || 'Coach'}, I am interested in ALL Stars Academy trials and would like more information on registration and training schedule.`;
     window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(quickMsg)}`, '_blank');
   };
