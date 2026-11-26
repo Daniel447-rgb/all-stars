@@ -5,6 +5,7 @@ import {
   INITIAL_ACHIEVEMENTS, 
   INITIAL_SETTINGS 
 } from '../services/mockData';
+import { createFormationLayout, INITIAL_FORMATIONS } from '../services/formations';
 import { 
   auth, 
   db, 
@@ -67,6 +68,9 @@ export const AppProvider = ({ children }) => {
         const parsed = JSON.parse(saved);
         // Ensure defaults are retained when saved settings are from an older app version
         const merged = { ...INITIAL_SETTINGS, ...parsed };
+        if (merged.coachName === 'Coach Adekunle') {
+          merged.coachName = 'Taiwo Johnson';
+        }
         if (merged.heroSlideIntervalSec === 30 || !merged.heroSlideIntervalSec) {
           merged.heroSlideIntervalSec = 15;
         }
@@ -82,7 +86,17 @@ export const AppProvider = ({ children }) => {
   });
 
   // 5. Tactical Formation
-  const [formation, setFormation] = useState('4-3-3');
+  const [formations, setFormations] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('allstars_formations') || '{}');
+      return { ...INITIAL_FORMATIONS, ...saved };
+    } catch {
+      return INITIAL_FORMATIONS;
+    }
+  });
+  const [formation, setFormation] = useState(() =>
+    localStorage.getItem('allstars_formation') || '4-3-3'
+  );
 
   // 6. Auth State (Strictly Firebase Auth)
   const [currentUser, setCurrentUser] = useState(null);
@@ -112,6 +126,14 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('allstars_settings', JSON.stringify(clubSettings));
   }, [clubSettings]);
+
+  useEffect(() => {
+    localStorage.setItem('allstars_formations', JSON.stringify(formations));
+  }, [formations]);
+
+  useEffect(() => {
+    localStorage.setItem('allstars_formation', formation);
+  }, [formation]);
 
   // Firebase Auth listener
   useEffect(() => {
@@ -231,6 +253,44 @@ export const AppProvider = ({ children }) => {
     showToast('First Eleven Squad updated!');
   };
 
+  const moveStartingXI = (playerId, targetSlot) => {
+    const movingPlayer = players.find(player => player.id === playerId);
+    if (!movingPlayer?.isStartingXI || movingPlayer.startingSlot === targetSlot) return;
+
+    const targetPlayer = players.find(player =>
+      player.isStartingXI && player.startingSlot === targetSlot
+    );
+
+    setPlayers(prev => prev.map(player => {
+      if (player.id === playerId) {
+        return { ...player, startingSlot: targetSlot };
+      }
+      if (targetPlayer && player.id === targetPlayer.id) {
+        return { ...player, startingSlot: movingPlayer.startingSlot };
+      }
+      return player;
+    }));
+    showToast(targetPlayer ? 'First Eleven positions swapped!' : 'First Eleven position updated!');
+  };
+
+  const addFormation = (name) => {
+    const normalizedName = name.trim();
+    const layout = createFormationLayout(normalizedName);
+    if (!layout) {
+      showToast('Enter a valid formation with lines totaling 10 outfield players, such as 4-2-3-1.', 'error');
+      return false;
+    }
+    if (Object.keys(formations).some(existing => existing.toLowerCase() === normalizedName.toLowerCase())) {
+      showToast('That formation already exists.', 'error');
+      return false;
+    }
+
+    setFormations(prev => ({ ...prev, [normalizedName]: layout }));
+    setFormation(normalizedName);
+    showToast(`${normalizedName} formation added.`);
+    return true;
+  };
+
   // Player of the Week CRUD
   const updatePOTW = async (potwData) => {
     const updated = { ...playerOfTheWeek, ...potwData };
@@ -329,8 +389,11 @@ export const AppProvider = ({ children }) => {
         deletePlayer,
         startingXIPlayers: players.filter(p => p.isStartingXI),
         updateStartingXI,
+        moveStartingXI,
         formation,
         setFormation,
+        formations,
+        addFormation,
         playerOfTheWeek,
         updatePOTW,
         achievements,

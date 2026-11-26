@@ -86,7 +86,7 @@ export default function Footer({ onOpenAuth }) {
             </p>
 
             <a
-              href={`https://wa.me/${clubSettings.coachWhatsapp?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello Coach Adekunle, I would like to inquire about ALL Stars Academy.')}`}
+              href={`https://wa.me/${clubSettings.coachWhatsapp?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello ${clubSettings.coachName || 'Coach'}, I would like to inquire about ALL Stars Academy.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition-all duration-200"

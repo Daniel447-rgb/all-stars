@@ -1,53 +1,18 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { useApp } from '../context/AppContext';
-import { Shield, Sparkles, User, Trophy, Eye } from 'lucide-react';
+import { User, Trophy } from 'lucide-react';
 
 export default function StartingXI() {
-  const { players, formation, setFormation, setSelectedPlayerModal } = useApp();
-
-  const FORMATION_COORDINATES = {
-    '4-3-3': {
-      GK: { top: '88%', left: '50%', label: 'Goalkeeper' },
-      LB: { top: '70%', left: '15%', label: 'Left Back' },
-      CB1: { top: '74%', left: '38%', label: 'Centre Back' },
-      CB2: { top: '74%', left: '62%', label: 'Centre Back' },
-      RB: { top: '70%', left: '85%', label: 'Right Back' },
-      CDM: { top: '53%', left: '50%', label: 'Defensive Mid' },
-      CM: { top: '43%', left: '26%', label: 'Central Mid' },
-      CAM: { top: '38%', left: '74%', label: 'Attacking Mid' },
-      LW: { top: '18%', left: '16%', label: 'Left Wing' },
-      ST: { top: '14%', left: '50%', label: 'Striker' },
-      RW: { top: '18%', left: '84%', label: 'Right Wing' },
-    },
-    '4-4-2': {
-      GK: { top: '88%', left: '50%', label: 'Goalkeeper' },
-      LB: { top: '72%', left: '15%', label: 'Left Back' },
-      CB1: { top: '75%', left: '38%', label: 'Centre Back' },
-      CB2: { top: '75%', left: '62%', label: 'Centre Back' },
-      RB: { top: '72%', left: '85%', label: 'Right Back' },
-      LW: { top: '48%', left: '15%', label: 'Left Mid' },
-      CDM: { top: '52%', left: '38%', label: 'Central Mid' },
-      CM: { top: '52%', left: '62%', label: 'Central Mid' },
-      RW: { top: '48%', left: '85%', label: 'Right Mid' },
-      CAM: { top: '18%', left: '36%', label: 'Centre Forward' },
-      ST: { top: '18%', left: '64%', label: 'Striker' },
-    },
-    '3-5-2': {
-      GK: { top: '88%', left: '50%', label: 'Goalkeeper' },
-      CB1: { top: '74%', left: '25%', label: 'Left Centre Back' },
-      CB2: { top: '77%', left: '50%', label: 'Centre Back' },
-      RB: { top: '74%', left: '75%', label: 'Right Centre Back' },
-      LB: { top: '48%', left: '12%', label: 'Left Wing-Back' },
-      CDM: { top: '55%', left: '38%', label: 'Defensive Mid' },
-      CM: { top: '55%', left: '62%', label: 'Central Mid' },
-      CAM: { top: '38%', left: '50%', label: 'Attacking Mid' },
-      RW: { top: '48%', left: '88%', label: 'Right Wing-Back' },
-      LW: { top: '16%', left: '35%', label: 'Striker' },
-      ST: { top: '16%', left: '65%', label: 'Striker' },
-    }
-  };
-
-  const currentCoords = FORMATION_COORDINATES[formation] || FORMATION_COORDINATES['4-3-3'];
+  const {
+    players,
+    formation,
+    formations,
+    setFormation,
+    moveStartingXI,
+    setSelectedPlayerModal
+  } = useApp();
+  const draggedPlayerId = useRef(null);
+  const currentCoords = formations[formation] || formations['4-3-3'];
   const starterPlayers = players.filter(p => p.isStartingXI);
   const benchPlayers = players.filter(p => !p.isStartingXI);
 
@@ -75,12 +40,12 @@ export default function StartingXI() {
             Starting <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500">Eleven Squad</span>
           </h2>
           <p className="text-slate-400 text-sm sm:text-base mt-2">
-            The coach's first-choice tactical lineup on matchdays. Click on any player on the pitch to inspect their attributes.
+            The coach's first-choice tactical lineup on matchdays. Drag players to switch positions or click to inspect their attributes.
           </p>
 
           {/* Formation Switcher */}
           <div className="mt-6 inline-flex p-1.5 rounded-2xl bg-[#07090e] border border-[#1b212f] gap-1.5">
-            {['4-3-3', '4-4-2', '3-5-2'].map((fmt) => (
+            {Object.keys(formations).map((fmt) => (
               <button
                 key={fmt}
                 onClick={() => setFormation(fmt)}
@@ -134,11 +99,30 @@ export default function StartingXI() {
                   key={slotKey}
                   style={{ top: coord.top, left: coord.left }}
                   className="absolute -translate-x-1/2 -translate-y-1/2 z-20 group"
+                  onDragOver={(event) => {
+                    event.preventDefault();
+                    event.dataTransfer.dropEffect = 'move';
+                  }}
+                  onDrop={(event) => {
+                    event.preventDefault();
+                    const playerId = draggedPlayerId.current || event.dataTransfer.getData('text/plain');
+                    if (playerId) moveStartingXI(playerId, slotKey);
+                    draggedPlayerId.current = null;
+                  }}
                 >
                   {player ? (
                     <button
                       onClick={() => setSelectedPlayerModal(player)}
-                      className="flex flex-col items-center focus:outline-none transition-all duration-300 hover:scale-125 cursor-pointer"
+                      draggable
+                      onDragStart={(event) => {
+                        draggedPlayerId.current = player.id;
+                        event.dataTransfer.effectAllowed = 'move';
+                        event.dataTransfer.setData('text/plain', player.id);
+                      }}
+                      onDragEnd={() => {
+                        draggedPlayerId.current = null;
+                      }}
+                      className="flex flex-col items-center focus:outline-none transition-all duration-300 hover:scale-125 cursor-grab active:cursor-grabbing"
                     >
                       {/* Avatar with mature gold border */}
                       <div className="relative">

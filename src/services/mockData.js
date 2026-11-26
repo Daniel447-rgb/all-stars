@@ -65,7 +65,7 @@ export const INITIAL_ACHIEVEMENTS = [
 export const INITIAL_SETTINGS = {
   academyName: 'ALL Stars Academy',
   tagline: 'Forging The Next Generation of Football Royalty',
-  coachName: 'Coach Adekunle',
+  coachName: 'Taiwo Johnson',
   coachWhatsapp: '+2347037143782', // Editable in admin
   coachEmail: 'coach@allstarsacademy.com',
   trainingGround: 'ALL Stars Sports Complex, Starway Arena',

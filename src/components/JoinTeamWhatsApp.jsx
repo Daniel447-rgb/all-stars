@@ -211,7 +211,7 @@ export default function JoinTeamWhatsApp() {
                   rows={3}
                   value={formData.personalMessage}
                   onChange={handleChange}
-                  placeholder="Tell Coach Adekunle about your strengths (e.g. pace, stamina, vision), match achievements, and why you want to wear the ALL Stars jersey..."
+                  placeholder={`Tell ${clubSettings.coachName || 'the coach'} about your strengths (e.g. pace, stamina, vision), match achievements, and why you want to wear the ALL Stars jersey...`}
                   className="w-full bg-[#07090e] border border-[#1b212f] focus:border-emerald-400 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none transition-colors resize-none"
                 />
               </div>
@@ -242,7 +242,7 @@ export default function JoinTeamWhatsApp() {
                 </div>
                 <div>
                   <div className="text-sm font-black text-white flex items-center gap-1.5">
-                    <span>{clubSettings.coachName || 'Coach Adekunle'}</span>
+                    <span>{clubSettings.coachName || 'Taiwo Johnson'}</span>
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   </div>
                   <div className="text-xs text-slate-400 font-mono">

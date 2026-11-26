@@ -35,6 +35,8 @@ export default function AdminPanel({ isOpen, onClose }) {
     updateStartingXI, 
     formation, 
     setFormation,
+    formations,
+    addFormation,
     playerOfTheWeek, 
     updatePOTW, 
     achievements, 
@@ -49,6 +51,7 @@ export default function AdminPanel({ isOpen, onClose }) {
   } = useApp();
 
   const [activeTab, setActiveTab] = useState('players'); // 'players' | 'startingXI' | 'potw' | 'achievements' | 'settings'
+  const [newFormationName, setNewFormationName] = useState('');
 
   // Player Form State (for Add or Edit)
   const [playerModalOpen, setPlayerModalOpen] = useState(false);
@@ -103,7 +106,7 @@ export default function AdminPanel({ isOpen, onClose }) {
 
   // Club Settings Form
   const [settingsForm, setSettingsForm] = useState({
-    coachName: clubSettings.coachName || 'Coach Adekunle',
+    coachName: clubSettings.coachName || 'Taiwo Johnson',
     coachWhatsapp: clubSettings.coachWhatsapp || '+2347037143782',
     trainingGround: clubSettings.trainingGround || 'ALL Stars Sports Complex',
     trainingDays: clubSettings.trainingDays || 'Tuesdays & Saturdays',
@@ -272,13 +275,18 @@ export default function AdminPanel({ isOpen, onClose }) {
     }
   };
 
+  const handleAddFormation = (e) => {
+    e.preventDefault();
+    if (addFormation(newFormationName)) setNewFormationName('');
+  };
+
   const handleLogout = async () => {
     await logOutAdmin();
     showToast('Signed out of Administrator session');
     onClose();
   };
 
-  const startingSlots = ['GK', 'LB', 'CB1', 'CB2', 'RB', 'CDM', 'CM', 'CAM', 'LW', 'ST', 'RW'];
+  const startingSlots = Object.keys(formations[formation] || formations['4-3-3']);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-xl animate-slide-in">
@@ -499,9 +507,9 @@ export default function AdminPanel({ isOpen, onClose }) {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="text-xs font-bold text-slate-400 uppercase">Formation:</span>
-                  {['4-3-3', '4-4-2', '3-5-2'].map(fmt => (
+                  {Object.keys(formations).map(fmt => (
                     <button
                       key={fmt}
                       onClick={() => setFormation(fmt)}
@@ -514,6 +522,34 @@ export default function AdminPanel({ isOpen, onClose }) {
                   ))}
                 </div>
               </div>
+
+              <form onSubmit={handleAddFormation} className="bg-slate-950/80 p-5 rounded-2xl border border-slate-800 flex flex-col sm:flex-row sm:items-end gap-3">
+                <div className="flex-1">
+                  <label htmlFor="new-formation" className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                    Add a Formation
+                  </label>
+                  <input
+                    id="new-formation"
+                    type="text"
+                    required
+                    pattern="[0-9]+(-[0-9]+){1,3}"
+                    value={newFormationName}
+                    onChange={(e) => setNewFormationName(e.target.value)}
+                    placeholder="e.g. 4-2-3-1"
+                    className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-emerald-400"
+                  />
+                  <p className="text-[11px] text-slate-500 mt-1.5">
+                    Enter 2–4 outfield lines that add up to 10 players. The goalkeeper is included automatically.
+                  </p>
+                </div>
+                <button
+                  type="submit"
+                  className="px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Formation</span>
+                </button>
+              </form>
 
               {/* 11 Starter Position Slots */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -658,7 +694,7 @@ export default function AdminPanel({ isOpen, onClose }) {
                     rows={3}
                     value={potwForm.coachQuote}
                     onChange={(e) => setPotwForm(prev => ({ ...prev, coachQuote: e.target.value }))}
-                    placeholder="Coach Adekunle's words on the player's dedication, discipline, and training ethic..."
+                    placeholder={`Words from ${clubSettings.coachName || 'Taiwo Johnson'} on the player's dedication, discipline, and training ethic...`}
                     className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-amber-400 resize-none"
                   />
                 </div>
@@ -784,7 +820,7 @@ export default function AdminPanel({ isOpen, onClose }) {
                         type="text"
                         value={settingsForm.coachName}
                         onChange={(e) => setSettingsForm(prev => ({ ...prev, coachName: e.target.value }))}
-                        placeholder="Coach Adekunle"
+                        placeholder="Taiwo Johnson"
                         className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-400"
                       />
                     </div>

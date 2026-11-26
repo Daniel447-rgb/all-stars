@@ -127,7 +127,7 @@ export default function Navbar({ onOpenAdmin, onOpenAuth }) {
 
             {/* Quick Coach WhatsApp Button */}
             <a
-              href={`https://wa.me/${clubSettings.coachWhatsapp?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello Coach Adekunle, I would like to inquire about ALL Stars Academy trials.')}`}
+              href={`https://wa.me/${clubSettings.coachWhatsapp?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello ${clubSettings.coachName || 'Coach'}, I would like to inquire about ALL Stars Academy trials.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold tracking-wider uppercase bg-[#0c1f14] text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-slate-950 transition-all duration-200"
@@ -214,7 +214,7 @@ export default function Navbar({ onOpenAdmin, onOpenAuth }) {
 
           <div className="pt-4 border-t border-[#1a202c] flex flex-col gap-2">
             <a
-              href={`https://wa.me/${clubSettings.coachWhatsapp?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello Coach Adekunle, I would like to inquire about joining ALL Stars Academy.')}`}
+              href={`https://wa.me/${clubSettings.coachWhatsapp?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello ${clubSettings.coachName || 'Coach'}, I would like to inquire about joining ALL Stars Academy.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider bg-emerald-600 hover:bg-emerald-500 text-white"
